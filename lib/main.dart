@@ -25,9 +25,8 @@ class _MyAppState extends State<MyApp> {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'Flutter Demo',
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-      ),
+      theme:
+          ThemeData(primaryColor: Color(0xffDFA2A9), primarySwatch: Colors.red),
       home: Material(
         child: Scaffold(
           appBar: PreferredSize(

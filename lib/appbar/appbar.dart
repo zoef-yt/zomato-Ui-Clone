@@ -22,9 +22,10 @@ class MyAppBar extends StatelessWidget {
               overflow: TextOverflow.ellipsis,
               style: TextStyle(
                 shadows: [
-                  Shadow(offset: Offset(0, -5), color: Colors.black),
+                  Shadow(offset: Offset(0, -6), color: Colors.black),
                 ],
                 color: Colors.transparent,
+                height: 2,
                 fontSize: 12,
                 decoration: TextDecoration.underline,
                 decorationColor: Colors.black,
