@@ -1,10 +1,7 @@
+import 'dart:math';
 import 'dart:ui';
 
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/painting.dart';
-import 'package:flutter/rendering.dart';
-import 'package:flutter/widgets.dart';
 import 'package:zomato/constant/constant.dart';
 
 class OrderScreen extends StatelessWidget {
@@ -24,8 +21,7 @@ class OrderScreen extends StatelessWidget {
                   padding: const EdgeInsets.symmetric(horizontal: 20.0),
                   child: TextField(
                     decoration: InputDecoration(
-                      hintStyle: TextStyle(
-                          height: .6, color: CupertinoColors.systemGrey),
+                      hintStyle: TextStyle(height: .6, color: Colors.grey),
                       hintText: 'Restaurant name, cuisine, or a dish....',
                       prefixIcon: Icon(
                         Icons.search,
@@ -260,9 +256,221 @@ class OrderScreen extends StatelessWidget {
                   padding: const EdgeInsets.only(left: 20.0),
                   child: SectionHeading(text: '910 restaurants around you'),
                 ),
+                Column(
+                  children: List<Widget>.generate(
+                      brandName.length,
+                      (index) => RestaurantsCard(
+                            index: index,
+                          )),
+                ),
               ],
             ),
           ],
+        ),
+      ),
+    );
+  }
+}
+
+class RestaurantsCard extends StatelessWidget {
+  const RestaurantsCard({
+    Key? key,
+    required this.index,
+  }) : super(key: key);
+  final int index;
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      margin: EdgeInsets.all(12),
+      width: double.maxFinite,
+      height: 280,
+      child: Container(
+        decoration: BoxDecoration(
+          color: Colors.white,
+          borderRadius: BorderRadius.circular(15),
+          boxShadow: [
+            BoxShadow(
+              color: Colors.grey.withOpacity(0.8),
+              spreadRadius: 1,
+              blurRadius: 5,
+              offset: Offset(0, 0),
+            ),
+          ],
+        ),
+        child: ClipRRect(
+          borderRadius: BorderRadius.circular(15),
+          child: Stack(
+            children: [
+              Image.asset(
+                'assets/images/brand/${brandName[index]}_food.png',
+                fit: BoxFit.cover,
+                height: 250,
+                alignment: Alignment.bottomCenter,
+                width: double.maxFinite,
+              ),
+              Positioned(
+                bottom: 0,
+                child: Container(
+                  padding: EdgeInsets.all(12),
+                  height: 110,
+                  width: 400,
+                  color: Colors.white,
+                  child: Column(
+                    children: [
+                      Row(
+                        children: [
+                          Container(
+                            width: 150,
+                            child: Text(
+                              brandName[index],
+                              style: TextStyle(
+                                  overflow: TextOverflow.ellipsis,
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 18),
+                            ),
+                          ),
+                          SizedBox(width: 145),
+                          Container(
+                            decoration: BoxDecoration(
+                                color: Color(0xff3C844C),
+                                borderRadius: BorderRadius.circular(8)),
+                            padding: EdgeInsets.all(5),
+                            child: Row(
+                              children: [
+                                Text(
+                                  '4.2',
+                                  style: TextStyle(color: Colors.white),
+                                ),
+                                Icon(Icons.star, color: Colors.white, size: 15),
+                              ],
+                            ),
+                          )
+                        ],
+                      ),
+                      SizedBox(height: 5),
+                      Row(
+                        children: [
+                          Container(
+                            width: 150,
+                            child: Text(
+                              brandDescription[index],
+                              style: TextStyle(
+                                  overflow: TextOverflow.ellipsis,
+                                  fontSize: 10),
+                            ),
+                          ),
+                          SizedBox(width: 125),
+                          Row(
+                            children: [
+                              Text(
+                                '₹350 for one',
+                                style: TextStyle(fontSize: 12),
+                              ),
+                            ],
+                          )
+                        ],
+                      ),
+                      SizedBox(height: 15),
+                      Row(
+                        children: [
+                          CircleAvatar(
+                            backgroundColor: Color(0xff706C9C),
+                            child: Icon(
+                              Icons.trending_up,
+                              size: 16,
+                              color: Colors.white,
+                            ),
+                            radius: 10,
+                          ),
+                          SizedBox(width: 5),
+                          Text(
+                            '${Random().nextInt(600) + 1000}+ orders place from here recently',
+                            style: TextStyle(
+                              fontSize: 12,
+                              color: Colors.grey,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                          SizedBox(width: 60),
+                          Container(
+                            decoration: BoxDecoration(
+                                color: Color(0xff5F9C9A),
+                                borderRadius: BorderRadius.circular(4)),
+                            height: 25,
+                            width: 50,
+                            padding: EdgeInsets.all(2),
+                            child: Column(
+                              children: [
+                                Container(
+                                  width: double.maxFinite,
+                                  child: Center(
+                                    child: Container(
+                                      decoration: BoxDecoration(
+                                        gradient: LinearGradient(
+                                            colors: [
+                                              Color(0xffFFD700),
+                                              Colors.white,
+                                              Color(0xffFFD700),
+                                            ],
+                                            begin: Alignment.centerLeft,
+                                            stops: [0.4, 0.5, 0.85],
+                                            end: Alignment.centerRight),
+                                      ),
+                                      child: Text(
+                                        'MAX SAFETY',
+                                        style: TextStyle(
+                                          fontSize: 7,
+                                          color: Colors.black,
+                                          fontWeight: FontWeight.bold,
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                                Text(
+                                  'DELIVERY',
+                                  style: TextStyle(
+                                      fontSize: 10, color: Colors.white),
+                                )
+                              ],
+                            ),
+                          )
+                        ],
+                      )
+                    ],
+                  ),
+                ),
+              ),
+              Positioned(
+                  top: 10,
+                  right: 10,
+                  child: CircleAvatar(
+                    backgroundColor: Colors.white,
+                    child: Icon(
+                      Random().nextBool()
+                          ? Icons.bookmark_border
+                          : Icons.bookmark,
+                      color: Colors.black87,
+                    ),
+                    radius: 20,
+                  )),
+              Positioned(
+                bottom: 120,
+                right: 10,
+                child: Container(
+                  padding: EdgeInsets.all(4),
+                  decoration: BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.circular(6)),
+                  child: Text(
+                    '4${Random().nextInt(10)} mins',
+                    style: TextStyle(
+                        overflow: TextOverflow.ellipsis, fontSize: 12),
+                  ),
+                ),
+              )
+            ],
+          ),
         ),
       ),
     );
@@ -284,7 +492,7 @@ class OrderAgainGridView extends StatelessWidget {
           scrollDirection: Axis.horizontal,
           gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
               childAspectRatio: (MediaQuery.of(context).size.width) /
-                  (MediaQuery.of(context).size.height / .8),
+                  (MediaQuery.of(context).size.height / .69),
               crossAxisSpacing: 20,
               mainAxisSpacing: 20,
               crossAxisCount: 2),
@@ -298,7 +506,7 @@ class OrderAgainGridView extends StatelessWidget {
                     child: ClipRRect(
                       borderRadius: BorderRadius.circular(15),
                       child: Image.asset(
-                        'assets/images/brand/${brandName[item]}_logo.png',
+                        'assets/images/brand/${brandName[(brandName.length - item) - 1]}_logo.png',
                         fit: BoxFit.fill,
                       ),
                     ),
@@ -308,9 +516,9 @@ class OrderAgainGridView extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [
                       Container(
-                        width: 90,
+                        width: 130,
                         child: Text(
-                          brandName[item],
+                          brandName[(brandName.length - item) - 1],
                           style: TextStyle(
                               overflow: TextOverflow.ellipsis,
                               fontWeight: FontWeight.bold,
@@ -318,7 +526,7 @@ class OrderAgainGridView extends StatelessWidget {
                         ),
                       ),
                       Container(
-                        width: 90,
+                        width: 130,
                         child: Text(
                           '4$item min',
                           style: TextStyle(
@@ -328,14 +536,14 @@ class OrderAgainGridView extends StatelessWidget {
                         ),
                       ),
                       Container(
-                        width: 90,
+                        width: 130,
                         child: Text(
                           '${item + 1}\0% OFF up to ₹${item + 1}\5',
                           style: TextStyle(
                               color: Colors.blue,
                               overflow: TextOverflow.ellipsis,
                               fontWeight: FontWeight.bold,
-                              fontSize: 10),
+                              fontSize: 12),
                         ),
                       ),
                     ],
